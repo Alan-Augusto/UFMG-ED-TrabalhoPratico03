@@ -32,16 +32,7 @@ comp: $(OBJ)
 	$(CC) $(CXXFLAGS) -o $(BIN_FOLFER)$(TARGET) $(OBJ)
 	
 run:
-	$(EXE) -i ./input/1.tst.i -o ./output/output1.txt -m 4 -s 5
-	$(EXE) -i ./input/2.tst.i -o ./output/output2.txt -m 4 -s 5
-	$(EXE) -i ./input/3.tst.i -o ./output/output3.txt -m 4 -s 5
-	$(EXE) -i ./input/4.tst.i -o ./output/output4.txt -m 4 -s 5
-	$(EXE) -i ./input/5.tst.i -o ./output/output5.txt -m 4 -s 5
-	$(EXE) -i ./input/6.tst.i -o ./output/output6.txt -m 4 -s 5
-	$(EXE) -i ./input/7.tst.i -o ./output/output7.txt -m 4 -s 5
-	$(EXE) -i ./input/8.tst.i -o ./output/output8.txt -m 4 -s 5
-	$(EXE) -i ./input/9.tst.i -o ./output/output9.txt -m 4 -s 5
-	$(EXE) -i ./input/10.tst.i -o ./output/output10.txt -m 4 -s 5
+	$(EXE) -i ./input/entrada_1.txt -o ./output/output_1.txt
 
 clean: 
 	@rm -rf $(OBJ_FOLDER)* $(BIN_FOLFER)* $(TARGET)
@@ -49,3 +40,10 @@ clean:
 	rm -rf gmon.out
 	rm -rf gprof.txt
 	clear
+
+git:
+	git add .
+	@echo "your commit text: "; \
+    read AGE ;\
+	git commit -m "Update $(LOGDATE) - $$AGE"
+	git push

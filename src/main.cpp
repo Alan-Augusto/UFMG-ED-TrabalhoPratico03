@@ -110,30 +110,24 @@ int main(int argc, char ** argv)
                 }
             }
             
-            //Área de impressão===========================
-            OutputFile << "operation: " << operation << endl;
-            OutputFile << "ID_recipient: " << ID_recipient << endl;
-            OutputFile << "ID_email: " << ID_email << endl;
-            OutputFile << "message: " << message << endl;
-            //============================================
+            //Cria um email com as informações coletadas;
+            Email Em(ID_email, ID_recipient, message);
+
+            //Entrga o email na posição correta da tabela hash existente
+            //Hash.SendMail();
             
         }
 
         if(operation == "CONSULTA"){
-            //Área de impressão===========================
-            OutputFile << "operation: " << operation << endl;
-            OutputFile << "ID_recipient: " << ID_recipient << endl;
-            OutputFile << "ID_email: " << ID_email << endl;
-            //============================================
+            //Consulta um email na tabela hash existente
+            //Hash.ConsultMail();
+            
         }
 
         if(operation == "APAGA"){
-            //Área de impressão===========================
-            OutputFile << "operation: " << operation << endl;
-            OutputFile << "ID_recipient: " << ID_recipient << endl;
-            OutputFile << "ID_email: " << ID_email << endl;
-            //============================================
-            
+            //Apaga um email da tabela hash existente
+            //Hash.DeleteMail();
+                       
         }
     }
     

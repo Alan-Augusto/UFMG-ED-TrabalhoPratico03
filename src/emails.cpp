@@ -4,9 +4,14 @@
 using namespace std;
 
 //EMAIL
+    Email::Email(int ID_email, int ID_recipient, string text){
+        ID = ID_email;
+        recipient = ID_recipient;
+        message = text;
+    }
     //Operators
     bool Email::operator==(const Email& x){
-        if (recipient_ID == x.recipient_ID) {
+        if (recipient == x.recipient) {
             return true;
         }
         else{
@@ -16,7 +21,7 @@ using namespace std;
     }
     
     bool Email::operator<(const Email& x){
-        if (email_ID < x.email_ID) {
+        if (ID < x.ID) {
             return true;
         }
         else{
@@ -26,7 +31,7 @@ using namespace std;
     }
 
     bool Email::operator>(const Email& x){
-        if (email_ID > x.email_ID) {
+        if (ID > x.ID) {
             return true;
         }
         else{

@@ -21,6 +21,7 @@ class Email{
         }
 
         //Methods
+        void create(int id_email, int id_recipient, string mssg);
 };
 
 //ÁRVORE BINÁRIA
@@ -59,9 +60,9 @@ class hashtable
     public:
         int size;
         hashtable(int M);
-        void insere(Email mensagem, int M);
-        Email pesquisa(int id_msg, int id_recipient);
-        void remove(int id_msg, int id_recipient);
+        void SendMail(Email mensagem);
+        Email find(int id_msg, int id_recipient);
+        void erease(int id_msg, int id_recipient);
 
         int hash_id(Email mensagem);
         bintree *table;

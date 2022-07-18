@@ -43,6 +43,12 @@ using namespace std;
 
     //Methods
 
+    void Email::create(int id_email, int id_recipient, string mssg){
+        ID = id_email;
+        recipient = id_recipient;
+        message = mssg;
+    }
+
 //NÓ DA ÁRVORE BINÁRIA
     tipo_no::tipo_no(){
         left = NULL;
@@ -181,7 +187,7 @@ using namespace std;
         return aux;
     }
 
-    Email hashtable::pesquisa(int id_msg, int id_recipient){
+    Email hashtable::find(int id_msg, int id_recipient){
         int pos;
 
         //Email auxiliar para busca do hash
@@ -205,7 +211,7 @@ using namespace std;
 
         //Se não existe ID ou o destinatário é diferente daquele procurado:
         if (email_find.ID == -1 || email_find.recipient != email_aux.recipient){
-            cout << "CONSULTA " << email_find.recipient << " " << email_find.ID << ": MENSAGEM INEXISTENTE" << endl;
+            cout << "CONSULTA " << id_recipient << " " << id_msg << ": MENSAGEM INEXISTENTE" << endl;
         }
         else{
             cout << "CONSULTA " << email_find.recipient << " " << email_find.ID << ": " << email_find.message << endl;
@@ -218,7 +224,7 @@ using namespace std;
         return email_find;
     }
     
-    void hashtable::insere(Email email, int M){
+    void hashtable::SendMail(Email email){
         int pos;
 
         //Arquivo de saída
@@ -235,7 +241,7 @@ using namespace std;
         //saida.close();
     }
     
-    void hashtable::remove(int id_msg, int id_recipient){
+    void hashtable::erease(int id_msg, int id_recipient){
         int pos;
 
         //Email auxiliar para busca do hash
@@ -253,7 +259,7 @@ using namespace std;
         email_find = table[pos].pesquisa(email_aux);
 
         if (email_find.ID == -1){
-            cout << "ERRO: MENSAGEM INEXISTENTE" << endl;
+            //OutputFile << "ERRO: MENSAGEM INEXISTENTE" << endl;
         }
         else{
             table[pos].remove(email_find);

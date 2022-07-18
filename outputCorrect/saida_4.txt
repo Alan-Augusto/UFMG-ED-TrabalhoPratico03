@@ -1,0 +1,18 @@
+OK: MENSAGEM 121 PARA 5 ARMAZENADA EM 0
+OK: MENSAGEM 122 PARA 5 ARMAZENADA EM 0
+OK: MENSAGEM 123 PARA 4 ARMAZENADA EM 4
+CONSULTA 5 121: Temos um presente para você! Clique aqui para saber mais.
+CONSULTA 5 122: Aqui está a fatura digital do seu cartão de crédito.
+CONSULTA 4 123: Nova mensagem no fórum do Moodle.
+OK: MENSAGEM APAGADA
+CONSULTA 5 121: MENSAGEM INEXISTENTE
+CONSULTA 5 122: Aqui está a fatura digital do seu cartão de crédito.
+CONSULTA 4 123: Nova mensagem no fórum do Moodle.
+OK: MENSAGEM APAGADA
+CONSULTA 5 121: MENSAGEM INEXISTENTE
+CONSULTA 5 122: MENSAGEM INEXISTENTE
+CONSULTA 4 123: Nova mensagem no fórum do Moodle.
+ERRO: MENSAGEM INEXISTENTE
+CONSULTA 5 121: MENSAGEM INEXISTENTE
+CONSULTA 5 122: MENSAGEM INEXISTENTE
+CONSULTA 4 123: Nova mensagem no fórum do Moodle.

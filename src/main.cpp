@@ -110,25 +110,29 @@ int main(int argc, char ** argv)
             
             //Cria um email com as informações coletadas;
             Email Em;
-            Em.ID = ID_email;
-            Em.recipient = ID_recipient;
-            Em.message = message;
+            Em.create(ID_email, ID_recipient, message);
 
             //Entrga o email na posição correta da tabela hash existente
-            //Hash.SendMail();
+            Server.SendMail(Em);
             
         }
 
         if(operation == "CONSULTA"){
-            //Consulta um email na tabela hash existente
-            //Hash.ConsultMail();
+            //Recolhe informações da consulta
+            lineIT >> ID_recipient;
+            lineIT >> ID_email;
+
+            Server.find(ID_email, ID_recipient);
+            
 
         }
 
         if(operation == "APAGA"){
-            //Apaga um email da tabela hash existente
-            //Hash.DeleteMail();
-                       
+            //Recolhe informações da consulta
+            lineIT >> ID_recipient;
+            lineIT >> ID_email;
+
+            Server.erease(ID_email, ID_recipient);    
         }
     }
     

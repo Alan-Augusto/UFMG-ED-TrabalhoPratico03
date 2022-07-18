@@ -5,11 +5,21 @@
 
 using namespace std;
 
+
+//FUNÇÕES GLOBAIS DO PROGRAMA
+void Assert(bool x, string text){
+    if(!x){
+        cout << text << endl;
+        exit(0);
+    }
+}
+
 //EMAIL
     Email::Email(){
         ID = -1;
         recipient = -1;
     }
+    
     //Operators
     bool Email::operator==(const Email& x){
         if (recipient == x.recipient) {
@@ -42,7 +52,6 @@ using namespace std;
     }
 
     //Methods
-
     void Email::create(int id_email, int id_recipient, string mssg){
         ID = id_email;
         recipient = id_recipient;
@@ -122,45 +131,37 @@ using namespace std;
     }
 
     void bintree::remove_recursivo(tipo_no *&no, Email email){
+        //Essa função só será chamada caso o email for encontrado na árvore
         tipo_no *aux;
 
-        //IMPRESSÃO
-        //ofstream saida(name_output, ios::app);
-
-        if (no == NULL){
-            cout << "ERRO: MENSAGEM INEXISTENTE" << endl;
-        }
-        //LEMEMLOG================================
-        if (email.ID < no->email.ID){
-            return remove_recursivo(no->left, email);
-        }
-        else if (email.ID > no->email.ID)
-            return remove_recursivo(no->right, email);
-        //Se encontrou a mensagem
-        else{
-            //Se o da direira é nulo
-            if (no->right == NULL){
-                //Faz apontar pro elemento da esquerda do nó.
-                aux = no;
-                no = no->left;
-                free(aux);
+        if (no != NULL){
+            //LEMEMLOG================================
+            if (email.ID < no->email.ID){
+                return remove_recursivo(no->left, email);
             }
-            //Se o da esquerda é nulo
-            else if (no->left == NULL){
-                //Faz apontar pro elemento da direita do nó.
-                aux = no;
-                no = no->right;
-                free(aux);
-            }
-            //Se aponta para 2 elementos válidos
+            else if (email.ID > no->email.ID)
+                return remove_recursivo(no->right, email);
+            //Se encontrou a mensagem
             else{
-                antecessor(no, no->left);
+                //Se o da direira é nulo
+                if (no->right == NULL){
+                    //Faz apontar pro elemento da esquerda do nó.
+                    aux = no;
+                    no = no->left;
+                    free(aux);
+                }
+                //Se o da esquerda é nulo
+                else if (no->left == NULL){
+                    //Faz apontar pro elemento da direita do nó.
+                    aux = no;
+                    no = no->right;
+                    free(aux);
+                }
+                //Se aponta para 2 elementos válidos
+                else{
+                    antecessor(no, no->left);
+                }
             }
-
-            cout << "OK: MENSAGEM APAGADA" << endl;
-            
-            //Fecha arquivo de saída
-            //saida.close();
         }
     }
 
@@ -177,94 +178,80 @@ using namespace std;
 
 //TABELA HASH
     //
-    hashtable::hashtable(int M){
-        this->table = new bintree[M];
+    hashtable::hashtable(int M, string outputName){
+        table = new bintree[M];
         size = M;
+        outputNameArq = outputName;
     }
 
     int hashtable::hash_id(Email email){
-        int aux = (email.ID % size);
+        int aux = (email.recipient % size);
         return aux;
     }
 
     Email hashtable::find(int id_msg, int id_recipient){
-        int pos;
-
         //Email auxiliar para busca do hash
         Email email_aux;
-        email_aux.ID = id_msg;
-        email_aux.recipient = id_recipient;
+        email_aux.create(id_msg, id_recipient, "");
         //=================================
 
-        //Pega a posição do email que está buscando
-        pos = hash_id(email_aux);
-
-        //Tentar fazer assim...
-        //email_aux = table[hash_id(email)].pesquisa(email_aux);
+        //Abre arquivo de saída
+        ofstream OutputFile(outputNameArq, ios::app);
+        Assert(OutputFile.is_open(), "Opening error in output file");
 
         //Traz o email que está buscando diretamente da árvore referente à tabela hash
         Email email_find;
-        email_find = table[pos].pesquisa(email_aux);
+        email_find = table[hash_id(email_aux)].pesquisa(email_aux);
 
-        //Arquivo de impressão
-        //ofstream saida(name_output, ios::app);
 
         //Se não existe ID ou o destinatário é diferente daquele procurado:
         if (email_find.ID == -1 || email_find.recipient != email_aux.recipient){
-            cout << "CONSULTA " << id_recipient << " " << id_msg << ": MENSAGEM INEXISTENTE" << endl;
+            OutputFile << "CONSULTA " << id_recipient << " " << id_msg << ": MENSAGEM INEXISTENTE" << endl;
         }
         else{
-            cout << "CONSULTA " << email_find.recipient << " " << email_find.ID << ": " << email_find.message << endl;
+            OutputFile << "CONSULTA " << email_find.recipient << " " << email_find.ID << ": " << email_find.message << endl;
         }
 
         //Fechar arquivo de saída
-        //saida.close();
+        OutputFile.close();
 
         //Retorna o email buscado
         return email_find;
     }
     
     void hashtable::SendMail(Email email){
-        int pos;
-
         //Arquivo de saída
-        //ofstream saida(name_output, ios::app);
+        ofstream OutputFile(outputNameArq, ios::app);
 
-        //Busca a posição da árvore binária correta
-        pos = hash_id(email);
-        //Insere o email na árvore adequada
-        table[pos].insere(email);
+        //Insere o email na árvore referente ao seu hash adequado
+        table[hash_id(email)].insere(email);
 
-        cout << "OK: MENSAGEM " << email.ID << " PARA " << email.recipient << " ARMAZENADA EM " << pos << endl;
+        OutputFile << "OK: MENSAGEM " << email.ID << " PARA " << email.recipient << " ARMAZENADA EM " << hash_id(email) << endl;
 
-        //FEcha arquivo de saída
-        //saida.close();
+        //Fecha arquivo de saída
+        OutputFile.close();
     }
     
     void hashtable::erease(int id_msg, int id_recipient){
-        int pos;
-
         //Email auxiliar para busca do hash
         Email email_aux;
-        email_aux.ID = id_msg;
-        email_aux.recipient = id_recipient;
+        email_aux.create(id_msg, id_recipient, "");
         //=================================
 
         //Arquivo de saída
-        //ofstream saida(name_output, ios::app);
-
-        pos = hash_id(email_aux);
+        ofstream OutputFile(outputNameArq, ios::app);
 
         Email email_find;
-        email_find = table[pos].pesquisa(email_aux);
+        email_find = table[hash_id(email_aux)].pesquisa(email_aux);
 
         if (email_find.ID == -1){
-            //OutputFile << "ERRO: MENSAGEM INEXISTENTE" << endl;
+            OutputFile << "ERRO: MENSAGEM INEXISTENTE" << endl;
         }
         else{
-            table[pos].remove(email_find);
+            table[hash_id(email_aux)].remove(email_find);
+            OutputFile << "OK: MENSAGEM APAGADA" << endl;
         }
 
         //Fecha Arquivo saída
-        //saida.close();
+        OutputFile.close();
     }

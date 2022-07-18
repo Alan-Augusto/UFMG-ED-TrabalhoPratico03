@@ -10,13 +10,6 @@ using namespace std;
 char *inputNameArq = NULL;
 char *outputNameArq  = NULL;
 
-void Assert(bool x, string text){
-    if(!x){
-        cout << text << endl;
-        exit(0);
-    }
-}
-
 void parse_args(int argc,char ** argv){
      // variaveis externas do getopt
      extern char * optarg;
@@ -59,8 +52,6 @@ int main(int argc, char ** argv)
     ifstream InputFile(inputNameArq);
     Assert(InputFile.is_open(), "Opening error in input file");
     //Abre o arquivo de saída
-    ofstream OutputFile(outputNameArq);
-    Assert(OutputFile.is_open(), "Opening error in output file");
     
 //Variáveis
     //Linha completa
@@ -68,7 +59,7 @@ int main(int argc, char ** argv)
     
     //Cria a tabela hash de acordo com o valor informado na primeira linha
     getline(InputFile, line);
-    hashtable Server(stoi(line));
+    hashtable Server(stoi(line), outputNameArq);
 
 //Execução
     //interpreta operação recebida em uma linha:
@@ -139,6 +130,5 @@ int main(int argc, char ** argv)
 
 //Fecha os arquivos
     InputFile.close();
-    OutputFile.close();
     return 0;
 }

@@ -3,6 +3,10 @@
 
 using namespace std;
 
+//FUNÇÕES GLOBAIS DO PROGRAMA
+void Assert(bool x, string text);
+
+
 //EMAIL
 class Email{
     public:
@@ -59,7 +63,8 @@ class hashtable
 {
     public:
         int size;
-        hashtable(int M);
+        string outputNameArq;
+        hashtable(int M, string outputName);
         void SendMail(Email mensagem);
         Email find(int id_msg, int id_recipient);
         void erease(int id_msg, int id_recipient);

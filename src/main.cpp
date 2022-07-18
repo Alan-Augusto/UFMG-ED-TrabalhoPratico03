@@ -63,16 +63,14 @@ int main(int argc, char ** argv)
     Assert(OutputFile.is_open(), "Opening error in output file");
     
 //Variáveis
-    //HashTable
-    //HasTable H;
     //Linha completa
     string line;
+    
+    //Cria a tabela hash de acordo com o valor informado na primeira linha
+    getline(InputFile, line);
+    hashtable Server(stoi(line));
 
 //Execução
-    //Tamanho da tabela Hash
-    getline(InputFile, line);
-    OutputFile << "Tamanho da atbela Hash ->" << stoi(line) << endl;
-
     //interpreta operação recebida em uma linha:
     while (getline(InputFile, line))
     {
@@ -111,7 +109,10 @@ int main(int argc, char ** argv)
             }
             
             //Cria um email com as informações coletadas;
-            Email Em(ID_email, ID_recipient, message);
+            Email Em;
+            Em.ID = ID_email;
+            Em.recipient = ID_recipient;
+            Em.message = message;
 
             //Entrga o email na posição correta da tabela hash existente
             //Hash.SendMail();
@@ -121,7 +122,7 @@ int main(int argc, char ** argv)
         if(operation == "CONSULTA"){
             //Consulta um email na tabela hash existente
             //Hash.ConsultMail();
-            
+
         }
 
         if(operation == "APAGA"){

@@ -10,12 +10,11 @@ class Email{
         int recipient;
         string message;
 
-        Email(int ID_email, int ID_recipient, string text);
+        Email();
         //Operators
         bool operator==(const Email& x);
         bool operator<(const Email& x);
         bool operator>(const Email& x);
-
         friend istream &operator>>( istream  &input, Email &D ) { 
             input >> D.message;
             return input;            
@@ -29,26 +28,27 @@ class Email{
 class tipo_no
 {
     public:
-        Email mensagem;
+        tipo_no();
+        Email email;
         tipo_no *left;
         tipo_no *right;
         friend class bintree;
-};    
+}; 
+
 class bintree
 {
     public:
         bintree();
-        ~bintree();
-        void insere(Email mensagem, int memlog);
+        void insere(Email mensagem);
         void caminha(int tipo);
-        void limpa();
-        Email pesquisa(Email mensagem, int memlog);
-        void remove(Email mensagem, int memlog);
+        void clean();
+        Email pesquisa(Email mensagem);
+        void remove(Email mensagem);
 
-        void insere_recursivo(tipo_no *&p, Email mensagem, int memlog);
+        void insere_recursivo(tipo_no *&p, Email mensagem);
         void apaga_recursivo(tipo_no *p);
-        Email pesquisa_recursivo(tipo_no *p, Email mensagem, int memlog);
-        void remove_recursivo(tipo_no *&p, Email mensagem, int memlog);
+        Email pesquisa_recursivo(tipo_no *p, Email mensagem);
+        void remove_recursivo(tipo_no *&p, Email mensagem);
         void antecessor(tipo_no *q, tipo_no *&r);
         tipo_no *raiz;
     };
@@ -57,11 +57,12 @@ class bintree
 class hashtable
 {
     public:
+        int size;
         hashtable(int M);
-        Email pesquisa(Email mensagem, int M, int Tipo, int memlog);
-        void insere(Email mensagem, int M, int memlog);
-        void remove(Email mensagem, int M, int memlog);
+        void insere(Email mensagem, int M);
+        Email pesquisa(int id_msg, int id_recipient);
+        void remove(int id_msg, int id_recipient);
 
-        int hash_id(Email mensagem, int M);
+        int hash_id(Email mensagem);
         bintree *table;
 };

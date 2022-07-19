@@ -2,6 +2,8 @@
 #include <emails.h>
 #include <fstream>
 #include <sstream>
+#include "memlog.h"
+#include "msgassert.h"
 
 using namespace std;
 
@@ -75,13 +77,14 @@ void Assert(bool x, string text){
         insere_recursivo(raiz, email);
     }
 
-    void bintree::insere_recursivo(tipo_no *&p, Email email){
+    void bintree::insere_recursivo(tipo_no *p, Email email){
         if (p == NULL){
             p = new tipo_no();
             p->email = email;
+            //Quando criar um nó, escreve a posição
+            escreveMemLog((long int)(&p->email), (long int)sizeof(Email), 0);
         }
         else{
-            //LEMEMLOG============================
             if (email.ID < p->email.ID){
                 insere_recursivo(p->left, email);
             }
@@ -114,7 +117,6 @@ void Assert(bool x, string text){
             aux.ID = -1;
             return aux; 
         }
-        //LEMEMLOG================================
         if (email.ID < no->email.ID){
             return pesquisa_recursivo(no->left, email);
         }
@@ -122,6 +124,8 @@ void Assert(bool x, string text){
             return pesquisa_recursivo(no->right, email);
         }
         else{
+            //Quando encontrado um nó, escreve a posição
+            leMemLog((long int)(&no->email), (long int)sizeof(Email), 0);
             return no->email;
         }
     }
@@ -133,9 +137,8 @@ void Assert(bool x, string text){
     void bintree::remove_recursivo(tipo_no *&no, Email email){
         //Essa função só será chamada caso o email for encontrado na árvore
         tipo_no *aux;
-
+        
         if (no != NULL){
-            //LEMEMLOG================================
             if (email.ID < no->email.ID){
                 return remove_recursivo(no->left, email);
             }

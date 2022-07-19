@@ -4,6 +4,9 @@
 #include <sstream>
 #include <fstream>
 #include <emails.h>
+#include <cstring>
+#include "memlog.h"
+#include "msgassert.h"
 
 using namespace std;
 
@@ -45,13 +48,22 @@ void parse_args(int argc,char ** argv){
 
 int main(int argc, char ** argv)
 {
+
+//Registro de acesso - BIBLIOTECA MEMLOG
+    string lognome = "/tmp/memlog.out";
+    int n = lognome.length();
+    char char_array[n + 1];
+    strcpy(char_array, lognome.c_str());
+    iniciaMemLog(&char_array[0]);
+    ativaMemLog();
+
+
 //Avalia linha de comando
     parse_args(argc,argv);
     
 //Abre Arquivo de entrada
     ifstream InputFile(inputNameArq);
     Assert(InputFile.is_open(), "Opening error in input file");
-    //Abre o arquivo de saída
     
 //Variáveis
     //Linha completa
@@ -62,6 +74,11 @@ int main(int argc, char ** argv)
     hashtable Server(stoi(line), outputNameArq);
 
 //Execução
+    //=== FASE MEMLOG ===
+    defineFaseMemLog(0);
+    //Por se tratar de uma execução simples, será feito em apenas uma fase
+    //===================
+
     //interpreta operação recebida em uma linha:
     while (getline(InputFile, line))
     {
@@ -102,7 +119,9 @@ int main(int argc, char ** argv)
             //Cria um email com as informações coletadas;
             Email Em;
             Em.create(ID_email, ID_recipient, message);
-
+            //Registra a posição do email:
+            //escreveMemLog((long int)(&(Em)),sizeof(Email), 0);
+            
             //Entrga o email na posição correta da tabela hash existente
             Server.SendMail(Em);
             
@@ -130,5 +149,5 @@ int main(int argc, char ** argv)
 
 //Fecha os arquivos
     InputFile.close();
-    return 0;
+    return finalizaMemLog();
 }

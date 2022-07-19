@@ -14,6 +14,7 @@ BIN_FOLFER = ./bin/
 OBJ_FOLDER = ./obj/
 SRC_FOLDER = ./src/
 OUTPUT_FOLDER = ./output/
+GPROF_FOLDER = ./gprof/
 
 # all sourcers, obs, and header files
 MAIN = main
@@ -33,12 +34,28 @@ comp: $(OBJ)
 	
 run:
 	$(EXE) -i ./input/entrada_1.txt -o ./output/output_1.txt
+	$(EXE) -i ./input/entrada_2.txt -o ./output/output_2.txt
+	$(EXE) -i ./input/entrada_3.txt -o ./output/output_3.txt
+	$(EXE) -i ./input/entrada_4.txt -o ./output/output_4.txt
+
+grafics:
+	$(EXE) -i ./input/graficos.txt -o ./output/output_graficos.txt
+	if test -d /tmp/out; then rm -rf /tmp/out; fi
+	mkdir /tmp/out
+	./analisamem/bin/analisamem -i /tmp/memlog.out -p /tmp/out/ordenacao
+	gnuplot /tmp/out/*.gp
+	ls /tmp/out/
+
+
+test:
+	$(EXE) -i ./input/Carga/Hash320000.txt -o ./output/output_Carga320000.txt
+	gprof $(EXE) gmon.out > ./gprof/gprof-Carga320000.txt
 
 clean: 
 	@rm -rf $(OBJ_FOLDER)* $(BIN_FOLFER)* $(TARGET)
 	@rm -rf $(OUTPUT_FOLDER)* 
-	rm -rf gmon.out
-	rm -rf gprof.txt
+	@rm -rf $(GPROF_FOLDER)*
+	rm -rf gmon.out0
 	clear
 
 git:

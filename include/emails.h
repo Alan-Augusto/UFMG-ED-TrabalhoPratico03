@@ -50,7 +50,7 @@ class bintree
         Email pesquisa(Email mensagem);
         void remove(Email mensagem);
 
-        void insere_recursivo(tipo_no *&p, Email mensagem);
+        void insere_recursivo(tipo_no *p, Email mensagem);
         void apaga_recursivo(tipo_no *p);
         Email pesquisa_recursivo(tipo_no *p, Email mensagem);
         void remove_recursivo(tipo_no *&p, Email mensagem);

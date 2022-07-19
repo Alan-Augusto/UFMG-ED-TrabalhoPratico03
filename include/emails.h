@@ -30,45 +30,45 @@ class Email{
 
 //ÁRVORE BINÁRIA
     //Nó da árvore binária:
-class tipo_no
+class KnotType
 {
     public:
-        tipo_no();
+        KnotType();
         Email email;
-        tipo_no *left;
-        tipo_no *right;
+        KnotType *left;
+        KnotType *right;
         friend class bintree;
 }; 
 
-class bintree
+class BinaryTree
 {
     public:
-        bintree();
+        BinaryTree();
         void insere(Email mensagem);
         void caminha(int tipo);
         void clean();
         Email pesquisa(Email mensagem);
         void remove(Email mensagem);
 
-        void insere_recursivo(tipo_no *p, Email mensagem);
-        void apaga_recursivo(tipo_no *p);
-        Email pesquisa_recursivo(tipo_no *p, Email mensagem);
-        void remove_recursivo(tipo_no *&p, Email mensagem);
-        void antecessor(tipo_no *q, tipo_no *&r);
-        tipo_no *raiz;
+        void insere_recursivo(KnotType *p, Email mensagem);
+        void apaga_recursivo(KnotType *p);
+        Email pesquisa_recursivo(KnotType *p, Email mensagem);
+        void remove_recursivo(KnotType *&p, Email mensagem);
+        void antecessor(KnotType *q, KnotType *&r);
+        
+        KnotType *raiz;
     };
 
 //TABELA HASH
-class hashtable
-{
+class HashTable{
     public:
-        int size;
-        string outputNameArq;
-        hashtable(int M, string outputName);
+        HashTable(int M, string outputName);
         void SendMail(Email mensagem);
         Email find(int id_msg, int id_recipient);
         void erease(int id_msg, int id_recipient);
-
         int hash_id(Email mensagem);
-        bintree *table;
+        
+        BinaryTree *tree;
+        string outputNameArq;
+        int size;
 };

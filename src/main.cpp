@@ -71,7 +71,7 @@ int main(int argc, char ** argv)
     
     //Cria a tabela hash de acordo com o valor informado na primeira linha
     getline(InputFile, line);
-    hashtable Server(stoi(line), outputNameArq);
+    HashTable Server(stoi(line), outputNameArq);
 
 //Execução
     //=== FASE MEMLOG ===

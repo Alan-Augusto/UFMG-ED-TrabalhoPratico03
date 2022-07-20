@@ -38,19 +38,6 @@ run:
 	$(EXE) -i ./input/entrada_3.txt -o ./output/output_3.txt
 	$(EXE) -i ./input/entrada_4.txt -o ./output/output_4.txt
 
-grafics:
-	$(EXE) -i ./input/graficos.txt -o ./output/output_graficos.txt
-	if test -d /tmp/out; then rm -rf /tmp/out; fi
-	mkdir /tmp/out
-	./analisamem/bin/analisamem -i /tmp/memlog.out -p /tmp/out/ordenacao
-	gnuplot /tmp/out/*.gp
-	ls /tmp/out/
-
-
-test:
-	$(EXE) -i ./input/Carga/Hash320000.txt -o ./output/output_Carga320000.txt
-	gprof $(EXE) gmon.out > ./gprof/gprof-Carga320000.txt
-
 clean: 
 	@rm -rf $(OBJ_FOLDER)* $(BIN_FOLFER)* $(TARGET)
 	@rm -rf $(OUTPUT_FOLDER)* 

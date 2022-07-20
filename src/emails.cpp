@@ -1,12 +1,6 @@
-#include <iostream>
 #include <emails.h>
-#include <fstream>
-#include <sstream>
-#include "memlog.h"
-#include "msgassert.h"
 
 using namespace std;
-
 
 //FUNÇÕES GLOBAIS DO PROGRAMA
 void Assert(bool x, string text){
@@ -77,12 +71,11 @@ void Assert(bool x, string text){
         insere_recursivo(raiz, email);
     }
 
-    void BinaryTree::insere_recursivo(KnotType *p, Email email){
+    void BinaryTree::insere_recursivo(KnotType *&p, Email email){
         if (p == NULL){
             p = new KnotType();
             p->email = email;
-            //Quando criar um nó, escreve a posição
-            escreveMemLog((long int)(&p->email), (long int)sizeof(Email), 0);
+
         }
         else{
             if (email.ID < p->email.ID){
@@ -124,8 +117,8 @@ void Assert(bool x, string text){
             return pesquisa_recursivo(no->right, email);
         }
         else{
-            //Quando encontrado um nó, escreve a posição
-            leMemLog((long int)(&no->email), (long int)sizeof(Email), 0);
+            //Quando encontrado um nó, lê a posição
+            LEMEMLOG((long int)(&no), (long int)sizeof(KnotType), 0);
             return no->email;
         }
     }
@@ -146,6 +139,9 @@ void Assert(bool x, string text){
                 return remove_recursivo(no->right, email);
             //Se encontrou a mensagem
             else{
+                KnotType *aux2 = no;
+                aux2 = no;
+                LEMEMLOG((long int)(&aux2), (long int)sizeof(KnotType), 0);
                 //Se o da direira é nulo
                 if (no->right == NULL){
                     //Faz apontar pro elemento da esquerda do nó.
@@ -164,6 +160,7 @@ void Assert(bool x, string text){
                 else{
                     antecessor(no, no->left);
                 }
+
             }
         }
     }
@@ -203,8 +200,9 @@ void Assert(bool x, string text){
         Assert(OutputFile.is_open(), "Opening error in output file");
 
         //Traz o email que está buscando diretamente da árvore referente à tabela hash
+        int key = hash_id(email_aux);
         Email email_find;
-        email_find = tree[hash_id(email_aux)].pesquisa(email_aux);
+        email_find = tree[key].pesquisa(email_aux);
 
 
         //Se não existe ID ou o destinatário é diferente daquele procurado:
@@ -227,10 +225,11 @@ void Assert(bool x, string text){
         ofstream OutputFile(outputNameArq, ios::app);
 
         //Insere o email na árvore referente ao seu hash adequado
-        tree[hash_id(email)].insere(email);
+        int key = hash_id(email);
+        tree[key].insere(email);
 
-        OutputFile << "OK: MENSAGEM " << email.ID << " PARA " << email.recipient << " ARMAZENADA EM " << hash_id(email) << endl;
-
+        OutputFile << "OK: MENSAGEM " << email.ID << " PARA " << email.recipient << " ARMAZENADA EM " << key << endl;
+        
         //Fecha arquivo de saída
         OutputFile.close();
     }
@@ -243,15 +242,15 @@ void Assert(bool x, string text){
 
         //Arquivo de saída
         ofstream OutputFile(outputNameArq, ios::app);
-
+        int key = hash_id(email_aux);
         Email email_find;
-        email_find = tree[hash_id(email_aux)].pesquisa(email_aux);
+        email_find = tree[key].pesquisa(email_aux);
 
         if (email_find.ID == -1){
             OutputFile << "ERRO: MENSAGEM INEXISTENTE" << endl;
         }
         else{
-            tree[hash_id(email_aux)].remove(email_find);
+            tree[key].remove(email_find);
             OutputFile << "OK: MENSAGEM APAGADA" << endl;
         }
 

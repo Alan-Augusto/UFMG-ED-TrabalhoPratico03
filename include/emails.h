@@ -1,5 +1,9 @@
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <sstream>
+#include "memlog.h"
+#include "msgassert.h"
 
 using namespace std;
 
@@ -43,32 +47,35 @@ class KnotType
 class BinaryTree
 {
     public:
+        
+        KnotType *raiz;
+
+        //Methods
         BinaryTree();
         void insere(Email mensagem);
         void caminha(int tipo);
         void clean();
         Email pesquisa(Email mensagem);
-        void remove(Email mensagem);
-
-        void insere_recursivo(KnotType *p, Email mensagem);
-        void apaga_recursivo(KnotType *p);
         Email pesquisa_recursivo(KnotType *p, Email mensagem);
+        void remove(Email mensagem);
         void remove_recursivo(KnotType *&p, Email mensagem);
+        void insere_recursivo(KnotType *&p, Email mensagem);
+        void apaga_recursivo(KnotType *p);
         void antecessor(KnotType *q, KnotType *&r);
         
-        KnotType *raiz;
     };
 
 //TABELA HASH
 class HashTable{
     public:
+        BinaryTree *tree;
+        int size;
+        
+        //Methods
         HashTable(int M, string outputName);
         void SendMail(Email mensagem);
         Email find(int id_msg, int id_recipient);
         void erease(int id_msg, int id_recipient);
         int hash_id(Email mensagem);
-        
-        BinaryTree *tree;
         string outputNameArq;
-        int size;
 };

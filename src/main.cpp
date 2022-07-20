@@ -120,7 +120,7 @@ int main(int argc, char ** argv)
             Email Em;
             Em.create(ID_email, ID_recipient, message);
             //Registra a posição do email:
-            //escreveMemLog((long int)(&(Em)),sizeof(Email), 0);
+            //leMemLog((long int)(&(Em)),sizeof(Email), 0);
             
             //Entrga o email na posição correta da tabela hash existente
             Server.SendMail(Em);
@@ -128,21 +128,12 @@ int main(int argc, char ** argv)
         }
 
         if(operation == "CONSULTA"){
-            //Recolhe informações da consulta
-            lineIT >> ID_recipient;
-            lineIT >> ID_email;
-
             Server.find(ID_email, ID_recipient);
-            
 
         }
 
         if(operation == "APAGA"){
-            //Recolhe informações da consulta
-            lineIT >> ID_recipient;
-            lineIT >> ID_email;
-
-            Server.erease(ID_email, ID_recipient);    
+            Server.erease(ID_email, ID_recipient); 
         }
     }
     

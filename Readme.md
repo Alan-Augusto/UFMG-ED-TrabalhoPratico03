@@ -6,6 +6,7 @@
 
 **Data de entrega: 19/07/2022 Objetivo**
 
+
 O objetivo deste trabalho é a implementação do simulador de um servidor de emails. No entanto, além do gerenciamento adequado da memória do sistema, agora também há foco na otimização da pesquisa por usuários e mensagens. O sistema simulado terá suporte à entrega, consulta e remoção de mensagens para usuários. O foco da simulação é verificar o funcionamento correto do sistema ao executar as diversas operações do servidor (descritas a seguir) em diferentes situações. A análise de complexidade das funções implementadas será avaliada na documentação, e será necessário fazer uma comparação descrevendo as vantagens e desvantagens (se houver) de se utilizar métodos de pesquisa e ordenação mais sofisticados.
 
 **Descrição**

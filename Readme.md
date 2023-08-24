@@ -1,7 +1,7 @@
 
-*📄Trabalho Prático 3 – Servidor de emails otimizado*
-**Estrutura de Dados**
-**Universidade Federal de Minas Gerais Departamento de Ciência da Computação**
+*📄Trabalho Prático 3 – Servidor de emails otimizado
+**Estrutura de Dados
+**Universidade Federal de Minas Gerais Departamento de Ciência da Computação
 
 
 **Objetivo**
